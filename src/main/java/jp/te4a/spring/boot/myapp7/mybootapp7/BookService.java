@@ -1,4 +1,4 @@
-package jp.te4a.spring.boot.myapp6.mybootapp6;
+package jp.te4a.spring.boot.myapp7.mybootapp7;
 
 import java.util.List;
 
@@ -17,3 +17,4 @@ public BookBean save(BookBean bookBean) {
  return bookRepository.findAll();
  }
 }
+
