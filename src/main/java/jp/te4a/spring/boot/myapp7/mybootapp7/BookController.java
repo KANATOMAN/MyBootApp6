@@ -1,4 +1,4 @@
-package jp.te4a.spring.boot.myapp6.mybootapp6;
+package jp.te4a.spring.boot.myapp7.mybootapp7;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,13 +14,13 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    @RequestMapping("/")
+    @RequestMapping("/books/list")
     public String index(Model model) {
         model.addAttribute("msg", "this is setting message");
-        return "index";  // templates/index.html を返す（Thymeleafなど使用時）
+        return "/books/list";  // templates/index.html を返す（Thymeleafなど使用時）
     }
 
-    @RequestMapping(value = "/post", method = RequestMethod.POST)
+    @RequestMapping(value ="/books/list", method = RequestMethod.POST)
     public ModelAndView postForm(
         @RequestParam("id") String id,
         @RequestParam("title") String title,
@@ -28,7 +28,7 @@ public class BookController {
         @RequestParam("publisher") String publisher,
         @RequestParam("price") String price
     ) {
-        ModelAndView mv = new ModelAndView("index");
+        ModelAndView mv = new ModelAndView("/books/list");
 
         // 入力データを保存
         bookService.save(new BookBean(Integer.valueOf(id), title, writter, publisher, Integer.valueOf(price)));
@@ -44,7 +44,7 @@ public class BookController {
                 .append("価格: ").append(bean.getPrice()).append("<BR><HR>");
         }
 
-        mv.addObject("msg", buff.toString());
+        mv.addObject("books", bookService.findAll());
         return mv;
     }
 }
